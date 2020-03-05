@@ -28,14 +28,19 @@ var getNavigatorInstance = function getNavigatorInstance() {
     }
   }
 
-  return false;
+  return {
+    platform: 'native',
+    userAgent: 'expoApp'
+  };
 };
 var isIOS13Check = function isIOS13Check(type) {
   var nav = getNavigatorInstance();
-  return nav && (nav.platform.includes(type) || nav.platform === 'MacIntel' && nav.maxTouchPoints > 1 && !window.MSStream);
+  return nav && (nav.platform.indexOf(type) !== -1 || nav.platform === 'MacIntel' && nav.maxTouchPoints > 1 && !window.MSStream);
 };
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -123,13 +128,13 @@ function _objectSpread2(target) {
     var source = arguments[i] != null ? arguments[i] : {};
 
     if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
+      ownKeys(Object(source), true).forEach(function (key) {
         _defineProperty(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      ownKeys(source).forEach(function (key) {
+      ownKeys(Object(source)).forEach(function (key) {
         Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
     }
@@ -428,7 +433,7 @@ var isIEType = function isIEType() {
 var isElectronType = function isElectronType() {
   var nav = getNavigatorInstance();
   var ua = nav && nav.userAgent.toLowerCase();
-  return typeof ua === 'string' ? ua.includes('electron') : false;
+  return typeof ua === 'string' ? /electron/.test(ua) : false;
 };
 
 var getIOS13 = function getIOS13() {
@@ -651,9 +656,7 @@ var CustomView = function CustomView(_ref12) {
 };
 
 function withOrientationChange(WrappedComponent) {
-  return (
-    /*#__PURE__*/
-    function (_React$Component) {
+  return (/*#__PURE__*/function (_React$Component) {
       _inherits(_class, _React$Component);
 
       function _class(props) {

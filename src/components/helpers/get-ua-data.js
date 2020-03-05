@@ -24,7 +24,11 @@ export const getNavigatorInstance = () => {
     }
   }
 
-  return false;
+  return {
+    platform: 'native',
+    userAgent: 'expoApp',
+    maxTouchPoints: 0,
+  };
 };
 
 export const isIOS13Check = type => {
